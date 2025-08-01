@@ -1,0 +1,232 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact | AbduDev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --accent: #ffcc00;
+      --box-bg: #111;
+    }body.light {
+  --bg: #fff;
+  --text: #0842ee;
+  --accent: #007bff;
+  --box-bg: #f0f0f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+nav h1 {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-center ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-center ul li a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.nav-center ul li a:hover {
+  color: var(--accent);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  height: 3px;
+  width: 25px;
+  background: var(--accent);
+  margin: 4px 0;
+}
+
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 2rem;
+  background: rgba(252, 0, 0, 0.95);
+  border: 1px solid #333;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.mobile-nav a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0.5rem 0;
+}
+
+.show {
+  display: flex !important;
+}
+
+.container {
+  min-height: 100vh;
+  padding: 6rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #222 0%, #000 100%);
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.contact-box {
+  background: var(--box-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(255,255,255,0.1);
+  text-align: center;
+  animation: slideUp 0.8s ease;
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(40px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.contact-box h2 {
+  margin-bottom: 1rem;
+}
+
+.contact-box p {
+  margin: 0.5rem 0;
+}
+
+.contact-icons a {
+  display: inline-block;
+  margin: 1rem;
+  font-size: 1.5rem;
+  color: var(--accent);
+  transition: transform 0.3s;
+}
+
+.contact-icons a:hover {
+  transform: scale(1.2);
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .nav-center ul {
+    display: none;
+  }
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>AbduDev</h1>
+    <div class="nav-center">
+      <ul>
+        <li><a href="index.html#top">Home</a></li>
+        <li><a href="index.html#introSection">Explore</a></li>
+        <li><a href="index.html#stats">Stats</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="game.html">Game</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <button onclick="toggleTheme()">🌓</button>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileMenu">
+      <a href="#top" onclick="toggleMenu()">Home</a>
+      <a href="#introSection" onclick="toggleMenu()">Explore</a>
+      <a href="#stats" onclick="toggleMenu()">Stats</a>
+      <a href="about.html" onclick="toggleMenu()">About</a>
+      <a href="shop.html" onclick="toggleMenu()">Shop</a>
+      <a href="game.html" onclick="toggleMenu()">Game</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+  </nav>  <div class="container">
+    <div class="contact-box">
+      <h2>Contact Me</h2>
+      <p><i class="fas fa-envelope"></i> abdudev@gmail.com</p>
+      <p><i class="fas fa-phone"></i> +62 821-2880-5229</p><div class="contact-icons">
+    <a href="https://wa.me/6282128805229" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://instagram.com/bikin_website_keren" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@ownersweetnetwork" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+</div>
+
+  </div>  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('show');
+    }
+  </script></body>
+</html>

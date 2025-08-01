@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shop | AbduDev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --accent: #ffcc00;
+      --box-bg: #111;
+    }
+    body.light {
+      --bg: #fff;
+      --text: #0842ee;
+      --accent: #007bff;
+      --box-bg: #f0f0f0;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+    nav h1 {
+      color: var(--accent);
+      font-size: 1.5rem;
+    }
+    .nav-center {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-center ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-center ul li a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .nav-center ul li a:hover {
+      color: var(--accent);
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background: var(--accent);
+      margin: 4px 0;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      right: 2rem;
+      background: rgba(252, 0, 0, 0.95);
+      border: 1px solid #333;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    .mobile-nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin: 0.5rem 0;
+    }
+    .show {
+      display: flex !important;
+    }
+    .container {
+      min-height: 100vh;
+      padding: 6rem 2rem 2rem;
+      background: radial-gradient(circle, #222 0%, #000 100%);
+      animation: fadeIn 1s ease-in;
+    }
+    .shop-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .shop-header h2 {
+      margin-bottom: 0.5rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .shop-item {
+      background: var(--box-bg);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+      text-align: center;
+      animation: slideUp 0.8s ease;
+    }
+    .shop-item video, .shop-item img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+    .shop-item h4 {
+      margin-bottom: 0.5rem;
+    }
+    .order-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .order-button:hover {
+      background: #fff;
+      color: #000;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      0% { transform: translateY(40px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      .nav-center ul {
+        display: none;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h1>AbduDev</h1>
+    <div class="nav-center">
+      <ul>
+        <li><a href="index.html#top">Home</a></li>
+        <li><a href="index.html#introSection">Explore</a></li>
+        <li><a href="index.html#stats">Stats</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="game.html">Game</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div class="nav-right">
+      <button onclick="toggleTheme()">🌓</button>
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileMenu">
+     <a href="#top" onclick="toggleMenu()">Home</a>
+      <a href="#introSection" onclick="toggleMenu()">Explore</a>
+      <a href="#stats" onclick="toggleMenu()">Stats</a>
+      <a href="about.html" onclick="toggleMenu()">About</a>
+      <a href="shop.html" onclick="toggleMenu()">Shop</a>
+      <a href="game.html" onclick="toggleMenu()">Game</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+  </nav>  <div class="container">
+    <div class="shop-header">
+      <h2>🛠 Jasa Pembuatan Website by Abdu Dev</h2>
+      <p>Website modern, cepat, dan profesional untuk bisnis Anda. <br/> Modern, fast, and professional websites for your business.</p>
+    </div>
+    <div class="grid">
+      <div class="shop-item">
+        <img src="testi1.jpg" alt="Project 1">
+        <h4>Website Toko Online</h4>
+        <p>Desain menarik dan responsif. <br/> Attractive and responsive design.</p>
+      </div>
+      <div class="shop-item">
+        <img src="testi2.jpg" alt="Project 2">
+        <h4>Landing Page Produk</h4>
+        <p>Promosi produk dengan landing page interaktif. <br/> Interactive landing page for product promotion.</p>
+      </div>
+      <div class="shop-item">
+        <img src="testi3.jpg" alt="Project 3">
+        <h4>Portofolio Personal</h4>
+        <p>Tampilkan karya Anda secara profesional. <br/> Show your work professionally.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 2rem;">
+      <a class="order-button" href="https://wa.me/6282128805229?text=Halo%20AbduDev,%20saya%20ingin%20memesan%20website">Order Now / Pesan Sekarang</a>
+    </div>
+  </div>
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('show');
+    }
+  </script>
+</body>
+</html>

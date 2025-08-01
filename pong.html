@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pong Classic | AbduDev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --accent: #ffcc00;
+    }
+
+    body.light {
+      --bg: #fff;
+      --text: #222;
+      --accent: #007bff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Orbitron', sans-serif;
+      transition: background 0.3s, color 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: var(--accent);
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      aspect-ratio: 3/2;
+      border: 3px solid var(--accent);
+      background: #111;
+      display: block;
+      margin: 1rem auto;
+      touch-action: none;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--accent);
+    }
+
+    .back-button {
+      margin-top: 1rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    #status {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent);
+      text-align: center;
+      margin-top: 0.5rem;
+      height: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
+  <h1>Pong Classic</h1>
+  <div id="status"></div>
+  <canvas id="pong" width="600" height="400"></canvas>
+  <a href="index.html" class="back-button">← Kembali ke Menu</a>
+
+  <script>
+    const canvas = document.getElementById("pong");
+    const ctx = canvas.getContext("2d");
+    const statusText = document.getElementById("status");
+
+    const paddleWidth = 10;
+    const paddleHeight = 80;
+    let playerY = canvas.height / 2 - paddleHeight / 2;
+    let aiY = canvas.height / 2 - paddleHeight / 2;
+    let score = 0;
+    let gameOver = false;
+
+    const ball = {
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      radius: 10,
+      speed: 5,
+      dx: 5,
+      dy: 5,
+    };
+
+    function drawRect(x, y, w, h, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, w, h);
+    }
+
+    function drawCircle(x, y, r, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2, false);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function drawNet() {
+      for (let i = 0; i <= canvas.height; i += 15) {
+        drawRect(canvas.width / 2 - 1, i, 2, 10, "#999");
+      }
+    }
+
+    function draw() {
+      drawRect(0, 0, canvas.width, canvas.height, "#111");
+      drawNet();
+      drawRect(0, playerY, paddleWidth, paddleHeight, "#ffcc00");
+      drawRect(canvas.width - paddleWidth, aiY, paddleWidth, paddleHeight, "#fff");
+      drawCircle(ball.x, ball.y, ball.radius, "#fff");
+    }
+
+    function moveBall() {
+      if (gameOver) return;
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+
+      // Tembok atas/bawah
+      if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+        ball.dy *= -1;
+      }
+
+      // Paddle kiri (player)
+      if (
+        ball.x - ball.radius < paddleWidth &&
+        ball.y > playerY &&
+        ball.y < playerY + paddleHeight
+      ) {
+        ball.dx *= -1;
+        score++;
+        if (score >= 5) {
+          statusText.innerText = "🏆 MENANG!";
+          gameOver = true;
+        }
+      }
+
+      // Paddle kanan (AI)
+      if (
+        ball.x + ball.radius > canvas.width - paddleWidth &&
+        ball.y > aiY &&
+        ball.y < aiY + paddleHeight
+      ) {
+        ball.dx *= -1;
+      }
+
+      // Kalah
+      if (ball.x - ball.radius < 0) {
+        statusText.innerText = "💥 KALAH!";
+        gameOver = true;
+      }
+
+      // Reset jika bola keluar kanan
+      if (ball.x + ball.radius > canvas.width) {
+        resetBall();
+      }
+    }
+
+    function resetBall() {
+      ball.x = canvas.width / 2;
+      ball.y = canvas.height / 2;
+      ball.dx = -ball.dx;
+    }
+
+    function moveAI() {
+      const center = aiY + paddleHeight / 2;
+      if (ball.y < center) aiY -= 4;
+      else if (ball.y > center) aiY += 4;
+    }
+
+    function update() {
+      if (!gameOver) {
+        moveBall();
+        moveAI();
+      }
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    // Mouse control
+    canvas.addEventListener("mousemove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      playerY = e.clientY - rect.top - paddleHeight / 2;
+    });
+
+    // Touch control
+    canvas.addEventListener("touchmove", (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const touchY = e.touches[0].clientY;
+      playerY = touchY - rect.top - paddleHeight / 2;
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle("light");
+    }
+
+    loop();
+  </script>
+</body>
+</html>
