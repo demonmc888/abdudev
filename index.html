@@ -1,540 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AbduDev | Web Developer | JASA PEMBUATAN WEBSITE</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --bg: #000;
-      --text: #fff;
-      --accent: #ffcc00;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AbduDev | Web Developer | JASA PEMBUATAN WEBSITE</title>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    html {
-      scroll-behavior: smooth;
-    }
+<style>
+/* ================= ROOT ================= */
+:root{
+  --bg:#020207;
+  --panel:rgba(255,255,255,.07);
+  --border:rgba(255,255,255,.14);
+  --text:#ffffff;
+  --muted:#a1a6b0;
+  --accent:#00f6ff;
+  --accent2:#ffcc00;
+  --glow:0 0 55px rgba(0,246,255,.45);
+}
 
-    body {
-      font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(circle at center, var(--bg) 0%, #000 100%);
-      color: var(--text);
-      overflow-x: hidden;
-      transition: background 0.5s, color 0.5s;
-    }
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 
-    body.dark-mode {
-      --bg: #f9f9f9;
-      --text: #111;
-    }
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 15%,rgba(0,246,255,.12),transparent 35%),
+    radial-gradient(circle at 85% 85%,rgba(255,204,0,.10),transparent 35%),
+    linear-gradient(180deg,#000,#050814,#000);
+  overflow-x:hidden;
+}
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10001;
-      backdrop-filter: blur(5px);
-    }
+/* GRID BACKGROUND */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(circle at center,black 55%,transparent 80%);
+  pointer-events:none;
+  z-index:-1;
+}
 
-    nav h1 {
-      color: var(--accent);
-      font-size: 1.5rem;
-    }
+/* ================= NAV ================= */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:1.4rem 3.2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  backdrop-filter:blur(22px);
+  background:rgba(0,0,0,.55);
+  border-bottom:1px solid var(--border);
+  z-index:10000;
+}
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
+nav h1{
+  font-family:'Orbitron';
+  font-weight:900;
+  letter-spacing:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    nav ul li a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 1rem;
-    }
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:3rem;
+}
 
-    nav ul li a:hover {
-      color: var(--accent);
-    }
+nav ul li a{
+  color:var(--text);
+  text-decoration:none;
+  font-size:.8rem;
+  letter-spacing:2px;
+  position:relative;
+}
 
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
+nav ul li a::after{
+  content:'';
+  position:absolute;
+  left:0;
+  bottom:-10px;
+  width:0;
+  height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:.4s;
+}
+nav ul li a:hover::after{width:100%}
 
-    .menu-toggle span {
-      height: 3px;
-      width: 25px;
-      background: var(--accent);
-      margin: 4px 0;
-    }
+/* ================= HERO ================= */
+header{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  padding:2rem;
+}
 
-    .mobile-nav {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      right: 2rem;
-      background: rgba(0, 0, 0, 0.95);
-      border: 1px solid #333;
-      padding: 1rem;
-      border-radius: 8px;
-    }
+.hero-wrap{
+  max-width:860px;
+  z-index:2;
+}
 
-    .mobile-nav a {
-      color: var(--text);
-      text-decoration: none;
-      margin: 0.5rem 0;
-    }
+.wave-character{
+  width:210px;
+  margin:auto;
+  filter:drop-shadow(0 0 55px rgba(0,246,255,.7));
+  animation:float 7s ease-in-out infinite;
+}
 
-    .show {
-      display: flex !important;
-    }
+@keyframes float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-24px)}
+  100%{transform:translateY(0)}
+}
 
-    .spinner, .overlay {
-      position: fixed;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-    }
+header h1{
+  font-family:'Orbitron';
+  font-size:2.6rem;
+  margin-top:1.6rem;
+  letter-spacing:2px;
+}
 
-    .spinner {
-      background: black;
-    }
+#typing{
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    .spinner div {
-      width: 50px;
-      height: 50px;
-      border: 5px solid #fff;
-      border-top: 5px solid orange;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
+header p{
+  color:var(--muted);
+  margin-top:1rem;
+  font-size:1.05rem;
+}
 
-    @keyframes spin {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
+/* ================= BUTTON ================= */
+.btn{
+  margin-top:2.3rem;
+  padding:1.05rem 3.4rem;
+  border-radius:80px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;
+  font-weight:600;
+  letter-spacing:1px;
+  cursor:pointer;
+  box-shadow:var(--glow);
+  transition:.35s;
+}
+.btn:hover{
+  transform:translateY(-4px) scale(1.08);
+  box-shadow:0 0 80px rgba(0,246,255,.8);
+}
 
-    .overlay {
-      background: black url('https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif') center/cover no-repeat;
-      display: none;
-      z-index: 9999;
-      transition: opacity 1s ease;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
+/* ================= INTRO ================= */
+.intro-section{
+  display:none;
+  padding:8rem 2rem;
+  text-align:center;
+}
 
-    .overlay h1 {
-      font-size: 3rem;
-      color: yellow;
-      animation: slideIn 2s ease-out forwards;
-    }
+.my-photo{
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid var(--border);
+  box-shadow:0 0 80px rgba(0,246,255,.6);
+}
 
-    .enter-button {
-      margin-top: 2rem;
-      padding: 1rem 2rem;
-      background: orange;
-      border: none;
-      font-size: 1.2rem;
-      cursor: pointer;
-      border-radius: 10px;
-      color: #fff;
-      animation: pulse 1.5s infinite;
-    }
+/* ================= GLASS CARD ================= */
+.glass{
+  max-width:920px;
+  margin:6rem auto;
+  padding:4.5rem 3.5rem;
+  background:var(--panel);
+  backdrop-filter:blur(28px);
+  border-radius:38px;
+  border:1px solid var(--border);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    0 70px 160px rgba(0,0,0,.75);
+}
 
-    @keyframes slideIn {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+/* ================= CAROUSEL & TESTI ================= */
+.carousel-item,
+.testimonial-item{
+  display:none;
+  font-size:1.35rem;
+  animation:fadeUp .8s ease;
+  text-align:center;
+}
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
+.active{display:block}
 
-    header {
-      height: 100vh;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-      z-index: 1;
-    }
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:none}
+}
 
-    #particles-js {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 0;
-    }
+.nav-btn{
+  display:flex;
+  justify-content:center;
+  gap:2rem;
+  margin-top:3rem;
+}
 
-    .wave-character {
-      width: 180px;
-      position: relative;
-      z-index: 2;
-      animation: wave 2s infinite ease-in-out;
-    }
+.nav-btn button{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  border:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  cursor:pointer;
+  font-size:1.2rem;
+  box-shadow:var(--glow);
+  transition:.3s;
+}
+.nav-btn button:hover{transform:scale(1.15)}
 
-    @keyframes wave {
-      0% { transform: rotate(0deg); }
-      20% { transform: rotate(10deg); }
-      40% { transform: rotate(-10deg); }
-      60% { transform: rotate(10deg); }
-      80% { transform: rotate(-10deg); }
-      100% { transform: rotate(0deg); }
-    }
+/* ================= STATS ================= */
+#stats{
+  padding:9rem 2rem;
+  text-align:center;
+  background:linear-gradient(180deg,#000,#060b1a,#000);
+}
 
-    header h1 {
-      font-size: 2rem;
-      z-index: 2;
-    }
+.stat-grid{
+  display:flex;
+  justify-content:center;
+  gap:6rem;
+  flex-wrap:wrap;
+  margin-top:3.5rem;
+}
 
-    #typing {
-      color: var(--accent);
-    }
+.stat-grid h3{
+  font-size:3.4rem;
+  font-family:'Orbitron';
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    header p {
-      font-size: 1.2rem;
-      color: #ccc;
-      z-index: 2;
-    }
+/* ================= FOOTER ================= */
+footer{
+  padding:4rem;
+  text-align:center;
+  background:#040404;
+  color:#777;
+}
 
-    .btn {
-      margin-top: 2rem;
-      padding: 0.8rem 1.6rem;
-      background: var(--accent);
-      border: none;
-      color: #000;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 8px;
-      z-index: 2;
-    }
+/* ================= FLOAT CHAT ================= */
+.chat-button{
+  position:fixed;
+  bottom:28px;
+  right:28px;
+  background:#25D366;
+  color:white;
+  padding:1rem 1.1rem;
+  border-radius:50%;
+  font-size:1.4rem;
+  box-shadow:0 30px 60px rgba(0,0,0,.65);
+  text-decoration:none;
+  transition:.3s;
+}
+.chat-button:hover{transform:scale(1.15)}
 
-    .intro-section {
-      display: none;
-      text-align: center;
-      padding-top: 80px;
-    }
-
-    .my-photo {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin: 2rem auto 1rem;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    }
-
-    .carousel, .testimonial {
-      max-width: 600px;
-      margin: 3rem auto;
-      text-align: center;
-      position: relative;
-    }
-
-    .carousel-item, .testimonial-item {
-      display: none;
-      animation: fadeInIntro 1s ease forwards;
-    }
-
-    .active {
-      display: block;
-    }
-
-    .carousel button, .testimonial button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--accent);
-      border: none;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-weight: bold;
-      border-radius: 5px;
-    }
-
-    .prev { left: 0; }
-    .next { right: 0; }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: #888;
-      background: #111;
-      margin-top: 4rem;
-    }
-
-    #stats {
-      padding: 4rem 2rem;
-      background: #111;
-      text-align: center;
-    }
-
-    @keyframes fadeInIntro {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @media (max-width: 768px) {
-      nav ul { display: none; }
-      .menu-toggle { display: flex; }
-    }
-
-    .chat-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #25D366;
-      color: white;
-      padding: 0.8rem 1rem;
-      border-radius: 50%;
-      font-size: 1.5rem;
-      z-index: 1000;
-      text-decoration: none;
-    }
-  </style>
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+  nav ul{display:none}
+  header h1{font-size:2.1rem}
+}
+</style>
 </head>
+
 <body>
 
-  <div class="spinner" id="spinner"><div></div></div>
-  <div class="overlay" id="overlay">
-    <div>
-      <h1>Welcome to AbduDev</h1>
-      <button class="enter-button" onclick="enterWebsite()">Enter Website</button>
-    </div>
-  </div>
+<nav>
+  <h1>ABDUDEV</h1>
+  <ul>
+    <li><a href="#top">Home</a></li>
+    <li><a href="#introSection">Explore</a></li>
+    <li><a href="#stats">Stats</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="shop.html">Shop</a></li>
+    <li><a href="game.html">Game</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
 
-  <nav>
-    <h1>AbduDev</h1>
-    <ul class="desktop-nav">
-      <li><a href="index.html#top">Home</a></li>
-        <li><a href="index.html#introSection">Explore</a></li>
-        <li><a href="index.html#stats">Stats</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="shop.html">Shop</a></li>
-        <li><a href="game.html">Game</a></li>
-        <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <button onclick="toggleTheme()">🌙</button>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-    <div class="mobile-nav" id="mobileMenu">
-      <a href="#top" onclick="toggleMenu()">Home</a>
-      <a href="#introSection" onclick="toggleMenu()">Explore</a>
-      <a href="#stats" onclick="toggleMenu()">Stats</a>
-      <a href="about.html" onclick="toggleMenu()">About</a>
-      <a href="shop.html" onclick="toggleMenu()">Shop</a>
-      <a href="game.html" onclick="toggleMenu()">Game</a>
-      <a href="contact.html" onclick="toggleMenu()">Contact</a>
-    </div>
-  </nav>
-
-  <header id="top">
-    <div id="particles-js"></div>
-    <img src="Waving Under the Starry Sky.png" alt="Orang Dadah" class="wave-character">
+<header id="top">
+  <div class="hero-wrap">
+    <img src="Waving Under the Starry Sky.png" class="wave-character">
     <h1>Hello, I’m <span id="typing"></span></h1>
     <p>I'm a passionate Web Developer & Tech Enthusiast</p>
     <button class="btn" onclick="document.getElementById('introSection').scrollIntoView()">Explore More</button>
-  </header>
+  </div>
+</header>
 
-  <section class="intro-section" id="introSection">
-    <img src="intro.jpg" alt="Foto AbduDev" class="my-photo">
-    <h2 style="color: var(--accent);">Let’s Build Something Amazing Together!</h2>
-    <p style="color: #ccc; max-width: 600px; margin: auto; font-size: 1.1rem;">
-      I specialize in building stunning, interactive websites that bring your ideas to life.
-      (Saya ahli dalam membangun situs web yang menakjubkan dan interaktif yang menghidupkan ide-ide Anda;)
-    </p>
-  </section>
+<section class="intro-section" id="introSection">
+  <img src="intro.jpg" class="my-photo">
+  <h2 style="margin-top:2rem;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+    Let’s Build Something Amazing Together!
+  </h2>
+  <p style="max-width:700px;margin:1.2rem auto;color:var(--muted)">
+    I specialize in building stunning, interactive websites that bring your ideas to life.
+    (Saya ahli dalam membangun situs web yang menakjubkan dan interaktif yang menghidupkan ide-ide Anda;)
+  </p>
+</section>
 
-  <section class="carousel">
-    <div class="carousel-item active">🚀 Project 1: Quiz Random</div>
-    <div class="carousel-item">🎨 Project 2: Portfolio Showcase</div>
-    <div class="carousel-item">🧠 Project 3: Business Website</div>
-    <button class="prev" onclick="prevSlide()">⟵</button>
-    <button class="next" onclick="nextSlide()">⟶</button>
-  </section>
+<section class="glass">
+  <div class="carousel-item active">🚀 Project 1: Quiz Random</div>
+  <div class="carousel-item">🎨 Project 2: Portfolio Showcase</div>
+  <div class="carousel-item">🧠 Project 3: Business Website</div>
+  <div class="nav-btn">
+    <button onclick="prevSlide()">⟵</button>
+    <button onclick="nextSlide()">⟶</button>
+  </div>
+</section>
 
-  <section id="stats">
-    <h2 style="color: var(--accent); margin-bottom:2rem;">PROGRAMMING LANGUAGE</h2>
-    <div style="display:flex; justify-content:center; gap:3rem; flex-wrap:wrap;">
-      <div><h3 id="projects"><></h3><p>HTML</p></div>
-      <div><h3 id="clients"><></h3><p>CSS</p></div>
-      <div><h3 id="experience"><></h3><p>JAVASCRIPT</p></div>
-    </div>
-  </section>
+<section id="stats">
+  <h2 style="font-family:'Orbitron';letter-spacing:2px">PROGRAMMING LANGUAGE</h2>
+  <div class="stat-grid">
+    <div><h3 id="projects"></h3><p>HTML</p></div>
+    <div><h3 id="clients"></h3><p>CSS</p></div>
+    <div><h3 id="experience"></h3><p>JAVASCRIPT</p></div>
+  </div>
+</section>
 
-  <section class="testimonial">
-    <h2 style="color: var(--accent); margin-bottom:1rem;">What Clients Say</h2>
-    <div class="testimonial-item active">“AbduDev transformed our business website beautifully!”</div>
-    <div class="testimonial-item">“Sangat cepat, profesional, dan hasilnya keren!”</div>
-    <div class="testimonial-item">“Website saya sekarang terlihat jauh lebih modern!”</div>
-    <div class="testimonial-item">“Palayanan yang ramah, di bantu sampai ke titik finish!”</div>
-    <button class="prev" onclick="prevTestimonial()">⟵</button>
-    <button class="next" onclick="nextTestimonial()">⟶</button>
-  </section>
+<section class="glass">
+  <h2 style="text-align:center;font-family:'Orbitron'">What Clients Say</h2>
+  <div class="testimonial-item active">“AbduDev transformed our business website beautifully!”</div>
+  <div class="testimonial-item">“Sangat cepat, profesional, dan hasilnya keren!”</div>
+  <div class="testimonial-item">“Website saya sekarang terlihat jauh lebih modern!”</div>
+  <div class="testimonial-item">“Palayanan yang ramah, di bantu sampai ke titik finish!”</div>
+  <div class="nav-btn">
+    <button onclick="prevTestimonial()">⟵</button>
+    <button onclick="nextTestimonial()">⟶</button>
+  </div>
+</section>
 
-  <footer id="contact">
-    <p>Contact: <a href="mailto:abdudev@gmail.com" style="color: var(--accent);">abdudev@gmail.com</a></p>
-    <p>&copy; 2025 AbduDev. All Rights Reserved.</p>
-  </footer>
+<footer>
+  <p>Contact: <a href="mailto:abdudev@gmail.com" style="color:var(--accent2)">abdudev@gmail.com</a></p>
+  <p>&copy; 2025 AbduDev. All Rights Reserved.</p>
+</footer>
 
-  <a class="chat-button" href="https://wa.me/6282128805229" target="_blank">💬</a>
+<a class="chat-button" href="https://wa.me/6282128805229" target="_blank">💬</a>
 
-  <audio id="welcomeSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_03b16b57b3.mp3"></audio>
+<script>
+/* typing */
+const roles=["AbduDev","UI Designer","Web Developer","Problem Solver"];
+let i=0,j=0,del=false;
+const el=document.getElementById("typing");
+function typing(){
+  el.textContent=roles[i].slice(0,j);
+  j+=del?-1:1;
+  if(j>roles[i].length+1)del=true;
+  if(j<0){del=false;i=(i+1)%roles.length}
+  setTimeout(typing,del?55:120);
+}
+typing();
 
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <script>
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("spinner").style.display = "none";
-        document.getElementById("overlay").style.display = "flex";
-      }, 3000);
-    });
+/* carousel */
+let idx=0;
+const items=document.querySelectorAll(".carousel-item");
+function showSlide(i){items.forEach((e,n)=>e.classList.toggle("active",n===i))}
+function nextSlide(){idx=(idx+1)%items.length;showSlide(idx)}
+function prevSlide(){idx=(idx-1+items.length)%items.length;showSlide(idx)}
 
-    function enterWebsite() {
-      document.getElementById("overlay").style.opacity = "0";
-      setTimeout(() => {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("welcomeSound").play();
-        document.getElementById("introSection").style.display = "block";
-      }, 1000);
-    }
+/* testimonial */
+let t=0;
+const testi=document.querySelectorAll(".testimonial-item");
+function showTestimonial(i){testi.forEach((e,n)=>e.classList.toggle("active",n===i))}
+function nextTestimonial(){t=(t+1)%testi.length;showTestimonial(t)}
+function prevTestimonial(){t=(t-1+testi.length)%testi.length;showTestimonial(t)}
 
-    function toggleMenu() {
-      document.getElementById("mobileMenu").classList.toggle("show");
-    }
-
-    function toggleTheme() {
-      document.body.classList.toggle("dark-mode");
-    }
-
-    const roles = ["AbduDev", "UI Designer", "Web Developer", "Problem Solver"];
-    let typeIndex = 0, charIndex = 0;
-    function typeEffect() {
-      const el = document.getElementById("typing");
-      if (charIndex < roles[typeIndex].length) {
-        el.textContent += roles[typeIndex].charAt(charIndex++);
-        setTimeout(typeEffect, 100);
-      } else setTimeout(eraseEffect, 1200);
-    }
-    function eraseEffect() {
-      const el = document.getElementById("typing");
-      if (charIndex > 0) {
-        el.textContent = roles[typeIndex].substring(0, --charIndex);
-        setTimeout(eraseEffect, 50);
-      } else {
-        typeIndex = (typeIndex + 1) % roles.length;
-        setTimeout(typeEffect, 500);
-      }
-    }
-    document.addEventListener("DOMContentLoaded", typeEffect);
-
-    let currentIndex = 0;
-    const items = document.querySelectorAll(".carousel-item");
-    function showSlide(index) {
-      items.forEach((el, i) => el.classList.toggle("active", i === index));
-    }
-    function nextSlide() {
-      currentIndex = (currentIndex + 1) % items.length;
-      showSlide(currentIndex);
-    }
-    function prevSlide() {
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-      showSlide(currentIndex);
-    }
-
-    let testimonialIndex = 0;
-    const testimonials = document.querySelectorAll(".testimonial-item");
-    function showTestimonial(index) {
-      testimonials.forEach((el, i) => el.classList.toggle("active", i === index));
-    }
-    function nextTestimonial() {
-      testimonialIndex = (testimonialIndex + 1) % testimonials.length;
-      showTestimonial(testimonialIndex);
-    }
-    function prevTestimonial() {
-      testimonialIndex = (testimonialIndex - 1 + testimonials.length) % testimonials.length;
-      showTestimonial(testimonialIndex);
-    }
-
-    function animateCounter(id, target) {
-      let count = 0;
-      const el = document.getElementById(id);
-      const interval = setInterval(() => {
-        count++;
-        el.textContent = count;
-        if (count === target) clearInterval(interval);
-      }, 30);
-    }
-
-    window.addEventListener("scroll", () => {
-      const stats = document.getElementById("stats");
-      if (stats.getBoundingClientRect().top < window.innerHeight) {
-        animateCounter("projects", 25);
-        animateCounter("clients", 10);
-        animateCounter("experience", 3);
-      }
-    }, { once: true });
-
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 60 },
-        "color": { "value": "#ffffff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.5 },
-        "size": { "value": 3 },
-        "line_linked": {
-          "enable": true,
-          "distance": 150,
-          "color": "#ffffff",
-          "opacity": 0.4,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 3,
-          "direction": "none",
-          "random": false,
-          "straight": false,
-          "bounce": false
-        }
-      },
-      "interactivity": {
-        "events": {
-          "onhover": { "enable": true, "mode": "repulse" }
-        }
-      }
-    });
-  </script>
+/* counter */
+function animate(id,target){
+  let c=0,el=document.getElementById(id);
+  let i=setInterval(()=>{el.textContent=++c;if(c==target)clearInterval(i)},35);
+}
+window.addEventListener("scroll",()=>{
+  if(stats.getBoundingClientRect().top<innerHeight){
+    animate("projects",25);
+    animate("clients",10);
+    animate("experience",3);
+  }
+},{once:true});
+</script>
 
 </body>
 </html>
